@@ -19,7 +19,7 @@ def vector_field_gen(m, n):
     m_ran = int(m/100)
     n_ran = int(n/100)
     x, y = np.mgrid[1:m+1:100, 1:n+1:100]
-    A_random = np.zeros((m_ran, n_ran)) #随机产生一个维度仅有100的源
+    A_random = np.zeros((m_ran, n_ran)) #随机产生一个维度10000的源
     
     for a in range(int(m_ran)):
         for b in range(int(n_ran)):
@@ -46,11 +46,11 @@ def fluid_field_gen(A, m, n, v_max_given):
     v_max_local = np.max(v)
     for x in range(m):
         for y in range(n):
-            v[x,y] = v[x,y] * v_max_given / v_max_local
+            v[x,y] = v[x,y] * 20 * v_max_given / v_max_local
     v = v[500:m-500, 500:n-500, :]
     np.savetxt('v_x.txt', v[:,:,0], fmt='%f', delimiter=',')
     np.savetxt('v_y.txt', v[:,:,1], fmt='%f', delimiter=',')
     return v
     
 A = vector_field_gen(1000, 1000)
-v = fluid_field_gen(A, 1000, 1000, 2.5)
+v = fluid_field_gen(A, 1000, 1000, 50)
